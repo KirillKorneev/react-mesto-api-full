@@ -1,0 +1,28 @@
+@import url(./__text/footer__text.css);
+
+.footer {
+    margin: auto;
+    margin-top: 66px;
+    padding-bottom: 60px;
+    color: #545454;
+    font-family: 'Inter', Arial, sans-serif;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 22px;
+    max-width: 882px;
+}
+
+@media screen and (max-width: 767px) {
+    .footer {
+        font-size: 14px;
+        line-height: 17px;
+        margin-left: 19px;
+    }
+}
+
+@media screen  and (max-width: 1023px) {
+    .footer {
+        max-width: 750px;
+        min-width: 300px;
+    }
+}

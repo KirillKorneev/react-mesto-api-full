@@ -1,0 +1,11 @@
+.auth__link {
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    margin: auto;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+}

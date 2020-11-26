@@ -1,0 +1,6 @@
+.element__data {
+    display: flex;
+    flex-direction: column;
+    margin-top: 21px;
+    margin-right: 21px;
+}

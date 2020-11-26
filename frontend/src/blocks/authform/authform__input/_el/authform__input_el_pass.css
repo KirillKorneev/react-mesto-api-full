@@ -1,0 +1,10 @@
+.authform__input_el_pass {
+    margin-bottom: 216px;
+}
+
+@media screen and (max-width: 320px) {
+    .authform__input_el_pass {
+        margin-bottom: 173px;
+    }
+}
+

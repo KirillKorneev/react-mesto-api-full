@@ -1,0 +1,15 @@
+.header__navBut {
+    display: none;
+}
+
+@media screen and (max-width: 767px) {
+    .header__navBut {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 21px;
+        margin-right: 27px;
+        margin-left: auto;
+        margin-top: 4px;
+    }
+}
