@@ -1,7 +1,7 @@
 import { setToken, getToken } from './token.js';
 
-//export const BASE_URL = 'http://api.mestokorneev.students.nomoreparties.xyz';
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'http://api.mestokorneev.students.nomoreparties.xyz';
+//export const BASE_URL = 'http://localhost:3000';
 
 
 export const register = (email, password) => {
