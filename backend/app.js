@@ -37,8 +37,18 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/signin', login);
-app.post('/signup', newUser);
+app.post('/signin', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().min(2).max(30),
+    password: Joi.string().required().min(2).max(30),
+  }),
+}), login);
+app.post('/signup', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().min(2).max(30),
+    password: Joi.string().required().min(2).max(30),
+  }),
+}), newUser);
 
 app.use(auth);
 app.use('/', cardsRoutes);
