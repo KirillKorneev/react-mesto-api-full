@@ -1,9 +1,0 @@
-.form__input-error_el_name {
-    top: calc(50% - 22px);
-}
-
-@media screen and (max-width: 767px) {
-    .form__input-error_el_name {
-        top: calc(50% - 20px);
-    }
-}

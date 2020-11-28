@@ -1,9 +1,0 @@
-.form__input-error_update {
-    top: calc(50% + 8px);
-}
-
-@media screen and (max-width: 767px) {
-    .form__input-error_update {
-        top: calc(50% + 1px);
-    }
-}

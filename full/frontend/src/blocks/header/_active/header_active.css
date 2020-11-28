@@ -1,8 +1,0 @@
-.header_active {
-}
-
-@media screen and (max-width: 767px) {
-    .header_active {
-        transform: translateY(40%);
-    }
-}

@@ -1,7 +1,0 @@
-.profile__pencil {
-    display: none;
-}
-
-.profile__pencil:hover {
-    display: flex;
-}
