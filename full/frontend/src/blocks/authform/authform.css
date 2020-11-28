@@ -1,0 +1,21 @@
+@import url('./__title/authform__title.css');
+@import url('./authform__input/authform__input.css');
+@import url('./__button/authform__button.css');
+
+.authform {
+    width: 358px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 320px) {
+    .authform {
+        width: 260px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .authform {
+        width: 300px;
+    }
+}

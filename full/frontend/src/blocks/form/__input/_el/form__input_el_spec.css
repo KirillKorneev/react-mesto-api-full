@@ -1,0 +1,9 @@
+.form__input_el_spec {
+    margin-bottom: 48px;
+}
+
+@media screen and (max-width: 767px) {
+    .form__input_el_spec {
+        margin-bottom: 27px;
+    }
+}

@@ -16,7 +16,10 @@ class Api {
 
     getItems(id) { //id = cards +
         return fetch(`${this.baseURL}/${id}`, {
-            headers: this.headers
+            headers: {
+                ...this.headers,
+                'authorization': `Bearer ${getToken()}`
+            }
         })
         .then(res => {
             return this._getResponseData(res);
@@ -26,7 +29,10 @@ class Api {
     deleteItem(id, cardId) { //id = cards  cardId = cardId +
         return fetch(`${this.baseURL}/${id}/${cardId}`, {
             method: 'DELETE',
-            headers: this.headers
+            headers: {
+                ...this.headers,
+                'authorization': `Bearer ${getToken()}`
+            }
         })
         .then(res => {
             return this._getResponseData(res);
@@ -36,7 +42,10 @@ class Api {
     createItem(id, cardName, cardLink) { //id = cards +
         return fetch(`${this.baseURL}/${id}`, {
             method: 'POST',
-            headers: this.headers,
+            headers: {
+                ...this.headers,
+                'authorization': `Bearer ${getToken()}`
+            },
             body: JSON.stringify({
                 name: cardName,
                 link: cardLink
@@ -50,7 +59,10 @@ class Api {
     putLike(id, cardId) { //id = cards/likes cardId = cardId +
         return fetch(`${this.baseURL}/cards/${cardId}/likes`, {
             method: 'PUT',
-            headers: this.headers
+            headers: {
+                ...this.headers,
+                'authorization': `Bearer ${getToken()}`
+            }
         })
         .then(res => {
             return this._getResponseData(res);
@@ -60,7 +72,10 @@ class Api {
     removeLike(id, cardId) { //id = cards/likes cardId = cardId
         return fetch(`${this.baseURL}/cards/${cardId}/likes`, {
             method: 'DELETE',
-            headers: this.headers
+            headers: {
+                ...this.headers,
+                'authorization': `Bearer ${getToken()}`
+            }
         })
         .then(res => {
             return this._getResponseData(res);
@@ -69,7 +84,10 @@ class Api {
 
     getUserInformation(id) { // id = users/me +
         return fetch(`${this.baseURL}/${id}`, {
-            headers: this.headers
+            headers: {
+                ...this.headers,
+                'authorization': `Bearer ${getToken()}`
+            }
         })
         .then(res => {
             return this._getResponseData(res);
@@ -79,14 +97,16 @@ class Api {
     profileEditing(id, profileName, profileJob) { // id = users/me +
         return fetch(`${this.baseURL}/${id}`, {
             method: 'PATCH',
-            headers: this.headers,
+            headers: {
+                ...this.headers,
+                'authorization': `Bearer ${getToken()}`
+            },
             body: JSON.stringify({
                 name: profileName,
                 about: profileJob
             })
         })
         .then(res => {
-            console.log(res);
             return this._getResponseData(res);
         });
     }
@@ -94,7 +114,10 @@ class Api {
     avatarEditing(id, avatar) { // id = users/me/avatar +
         return fetch(`${this.baseURL}/${id}`, {
             method: 'PATCH',
-            headers: this.headers,
+            headers: {
+                ...this.headers,
+                'authorization': `Bearer ${getToken()}`
+            },
             body: JSON.stringify({
                 avatar: avatar
             })
@@ -106,9 +129,9 @@ class Api {
 }
 
 export const api = new Api({
-    baseURL: 'http://api.mestokorneev.students.nomoreparties.xyz', //http://localhost:3000',
+    baseURL: 'http://api.mestokorneev.students.nomoreparties.xyz',
+    //baseURL: 'http://localhost:3000',
     headers: {
-        'Content-Type': 'application/json',
-        'authorization': `Bearer ${getToken()}`
+        'Content-Type': 'application/json'
     }
 })

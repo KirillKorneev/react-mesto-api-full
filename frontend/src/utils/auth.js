@@ -1,6 +1,7 @@
-import { setToken } from './token.js';
+import { setToken, getToken } from './token.js';
 
-export const BASE_URL = 'http://api.mestokorneev.students.nomoreparties.xyz'; //'http://localhost:3000';
+export const BASE_URL = 'http://api.mestokorneev.students.nomoreparties.xyz';
+//export const BASE_URL = 'http://localhost:3000';
 
 
 export const register = (email, password) => {
@@ -27,15 +28,7 @@ export const authorize = (email, password) => {
     },
     body: JSON.stringify({email, password})
   })
-  .then((response => response.json()))
-  .then((data) => {
-    if (data){
-      setToken(data.token);
-      return data;
-    } else {
-      return;
-    }
-  })
+  .then((response) => response.ok ? response.json() : Promise.reject(`Ошибка: ${response.status}`))
 };
 
 export const getContent = (token) => {
@@ -46,9 +39,6 @@ export const getContent = (token) => {
       'Authorization': `Bearer ${token}`,
     }
   })
-  .then(res => res.json())
-  .then((res) => {
-    return res;
-  })
+  .then((response) => response.ok ? response.json() : Promise.reject(`Ошибка: ${response.status}`))
 }
 

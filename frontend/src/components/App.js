@@ -21,42 +21,24 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const [success, setSuccess] = React.useState(false);
-  const [userData, setUserData] = React.useState({email: ''});
+  const [userData, setUserData] = React.useState('');
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [data, setData] = React.useState({
-    email: '',
-    password: ''
-})
   const history = useHistory();
 
-    function startInfo() {
-      Promise.all([
-        api.getUserInformation('users/me'),
-        api.getItems('cards')
-      ])
-      .then((res) => {
-        const [userInfo, firstCards] = res;
-        setCards(firstCards);
-        setCurrentUser(userInfo);
-      })
-      .catch((err) => {
-        console.log(`Ошибка ${err}`)
-      });
-    }
-  //React.useEffect(() => {
-  //  Promise.all([
-  //    api.getUserInformation('users/me'),
-  //    api.getItems('cards')
-  //  ])
-  //  .then((res) => {
-  //    const [userInfo, firstCards] = res;
-  //    setCards(firstCards);
-  //    setCurrentUser(userInfo);
-  //  })
-  //  .catch((err) => {
-  //    console.log(`Ошибка ${err}`)
-  //  });
-  //}, []);
+  function startInfo() {
+    Promise.all([
+      api.getUserInformation('users/me'),
+      api.getItems('cards')
+    ])
+    .then((res) => {
+      const [userInfo, firstCards] = res;
+      setCards(firstCards);
+      setCurrentUser(userInfo);
+    })
+    .catch((err) => {
+      console.log(`Ошибка ${err}`)
+    });
+  }
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i === currentUser._id);
@@ -135,7 +117,6 @@ function App() {
     .catch((err) => {
       console.log(`Ошибка ${err}`);
     });
-    console.log(currentUser);
   }
 
   function handleAvatarUpdate(link) {
@@ -160,8 +141,11 @@ function App() {
     });
   }
 
-  function handleLogin(userData) {
-    setUserData(userData);
+  function handleLogin(userDataIn) {
+    console.log(userDataIn);
+    console.log(userData);
+    setUserData(userDataIn.email);
+    console.log(userData);
     setLoggedIn(true);
   }
 
@@ -172,23 +156,22 @@ function App() {
   function handleLoginSite(email, password) {
     Auth.authorize(email, password)
       .then((data) => {
-        if (data.message === "Невалидные данные логина или пароля"){
-          setSuccess(false);
-          setIsNotificationPopupOpen(true);
-          setLoggedIn(false);
-        }
-        else {
+        if (data){
           setToken(data.token);
-          setData({ email: '', password: ''});
+          console.log(data);
+          startInfo();
           handleLogin(data);
           history.push('/');
+        } else {
+          return;
         }
       })
       .catch((err) => {
+        setSuccess(false);
+        setIsNotificationPopupOpen(true);
         setLoggedIn(false);
         console.log(err)
       });
-      startInfo();
   }
 
   function handleRegisterSite(email, password) {
@@ -215,25 +198,24 @@ function App() {
       return;
     }
 
-    //localStorage.removeItem('jwt');
-
     Auth.getContent(jwt)
     .then((res) => {
       if (res) {
-        const userData = {
-          email: res.email
-        }
+        const userDataIn = res.email;
         setToken(jwt);
         setLoggedIn(true);
-        setUserData(userData);
+        setUserData(userDataIn);
+        startInfo();
         history.push('/')
+      }
+      else {
+        return;
       }
     })
     .catch((err) => {
       console.log(err);
       setLoggedIn(false);
     });
-    startInfo();
   }
 
   React.useEffect(() => {
@@ -279,8 +261,8 @@ function App() {
                 handleSuccesToTrue={handleSuccesToTrue}
                 handleSuccesToFalse={handleSuccesToFalse}
                 handleLoginSite={handleLoginSite}
-                setData={setData}
-                data={data}
+                //setData={setData}
+                //data={data}
               />
             </Route>
             <Route path="/sign-up">

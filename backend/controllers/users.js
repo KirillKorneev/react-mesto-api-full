@@ -3,9 +3,11 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user.js');
 const { SALT_ROUND } = require('../configs/index.js');
 
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET } = require('../constants.js');
 
-const { NotFoundError, InvalidError, WrongAuth } = require('../utils/errors.js');
+const { NotFoundError } = require('../utils/NotFoundError.js');
+const { InvalidError } = require('../utils/InvalidError.js');
+const { WrongAuth } = require('../utils/WrongAuth.js');
 
 const getUsers = async (req, res, next) => User.find({})
   .then((data) => res.status(200).send(data))
@@ -19,13 +21,28 @@ const getUsers = async (req, res, next) => User.find({})
   });
 
 const getUser = (req, res, next) => {
-  let idUser;
-  if (req.params.id === 'me') {
-    idUser = req.user.id;
-  } else {
-    idUser = req.params.id;
-  }
+  const idUser = req.params.id;
   User.findOne({ _id: idUser })
+    .orFail(() => {
+      const error = new NotFoundError('Нет пользователя с таким id');
+      throw error;
+    })
+    .then((userPer) => {
+      res.send(userPer);
+      return userPer;
+    })
+    .catch((err) => {
+      if (err.kind === 'ObjectId') {
+        const e = new InvalidError('Неправильный id');
+        next(e);
+      } else {
+        next(err);
+      }
+    });
+};
+
+const getMyInfo = (req, res, next) => {
+  User.findOne({ _id: req.user.id })
     .orFail(() => {
       const error = new NotFoundError('Нет пользователя с таким id');
       throw error;
@@ -169,5 +186,5 @@ const login = (req, res, next) => {
 };
 
 module.exports = {
-  getUsers, getUser, updateUser, newUser, updateAvatar, login,
+  getUsers, getUser, updateUser, newUser, updateAvatar, login, getMyInfo,
 };
