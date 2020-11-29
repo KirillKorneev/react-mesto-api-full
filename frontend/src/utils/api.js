@@ -129,8 +129,8 @@ class Api {
 }
 
 export const api = new Api({
-    //baseURL: 'http://api.mestokorneev.students.nomoreparties.xyz',
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://api.mestokorneev.students.nomoreparties.xyz',
+    //baseURL: 'http://localhost:3000',
     headers: {
         'Content-Type': 'application/json'
     }

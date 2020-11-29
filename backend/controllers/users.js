@@ -97,7 +97,7 @@ const newUser = (req, res, next) => {
   User.findOne({ email })
     .then((user) => {
       if (user) {
-        const err = new NotFoundError('Такой пользователь уже существует');
+        const err = new WrongAuth('Такой пользователь уже существует');
         throw err;
       }
 

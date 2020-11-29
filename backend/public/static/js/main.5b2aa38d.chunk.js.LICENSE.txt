@@ -1,1 +1,0 @@
-//!this.props.card ? `popup popup_photo popup_open` : `popup popup_photo`
