@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user.js');
 const { SALT_ROUND } = require('../configs/index.js');
 
-const { JWT_SECRET } = require('../constants.js');
+const { JWT_SECRET } = process.env;
 
 const { NotFoundError } = require('../utils/NotFoundError.js');
 const { InvalidError } = require('../utils/InvalidError.js');
@@ -168,7 +168,7 @@ const login = (req, res, next) => {
         if (matched) {
           const token = jwt.sign({
             id: user._id,
-          }, JWT_SECRET, { expiresIn: '7d' });
+          }, '31b02825856a73edddd8f210aea483db8d838a72fd0ec54f6eda2c44cec64a1e', { expiresIn: '7d' });
           return res.send({
             token, email,
           });
