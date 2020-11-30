@@ -3,8 +3,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user.js');
 const { SALT_ROUND } = require('../configs/index.js');
 
-const { JWT_SECRET } = process.env;
-
 const { NotFoundError } = require('../utils/NotFoundError.js');
 const { InvalidError } = require('../utils/InvalidError.js');
 const { WrongAuth } = require('../utils/WrongAuth.js');

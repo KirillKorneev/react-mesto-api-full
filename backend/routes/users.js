@@ -3,6 +3,7 @@ const { celebrate, Joi } = require('celebrate');
 const {
   getUsers, getUser, updateUser, updateAvatar, getMyInfo,
 } = require('../controllers/users.js');
+
 const regex = /^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*$/;
 
 router.get('/users', getUsers);
@@ -11,8 +12,8 @@ router.get('/users/me', getMyInfo);
 
 router.get('/users/:id', celebrate({
   params: Joi.object().keys({
-    cardId: Joi.string().min(10)
-  })
+    id: Joi.string().length(24).hex(),
+  }),
 }), getUser);
 
 router.patch('/users/me', celebrate({

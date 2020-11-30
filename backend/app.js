@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { celebrate, Joi } = require('celebrate');
+const { celebrate, Joi, errors } = require('celebrate');
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -13,6 +13,7 @@ const {
   newUser, login,
 } = require('./controllers/users.js');
 const { requestLogger, errorLogger } = require('./middlewares/logger.js');
+
 const regex = /^(https?:\/\/)?([\w-]{1,32}\.[\w-]{1,32})[^\s@]*$/;
 
 const mongoDbUrl = 'mongodb://localhost:27017/mestodb-1';
@@ -51,7 +52,7 @@ app.post('/signup', celebrate({
     password: Joi.string().required().min(2).max(30),
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().pattern(regex)
+    avatar: Joi.string().pattern(regex),
   }),
 }), newUser);
 
@@ -62,6 +63,8 @@ app.use('/', userRoutes);
 app.use('*', (req, res) => {
   res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
 });
+
+app.use(errors());
 
 app.use(errorLogger);
 
